@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -12,13 +13,13 @@ import android.view.View.OnClickListener;
  * @author weishu
  * @date 16/3/7
  */
-public class MainActivity extends Activity implements OnClickListener{
+public class MainActivity extends Activity implements OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
+        getPackageManager();
         findViewById(R.id.btn1).setOnClickListener(this);
         findViewById(R.id.btn2).setOnClickListener(this);
     }
@@ -47,5 +48,37 @@ public class MainActivity extends Activity implements OnClickListener{
                 getPackageManager().getInstalledApplications(0);
                 break;
         }
+    }
+
+    //通过token来调用相应的Activity，所以在activityManagerService的token是subactivity，而在本进程中token对应的是targetactivity。
+    //具体的生命周期相关，可以看相关的文档。
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("majun_log", "onresume");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("majun_log", "onStart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("majun_log", "onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("majun_log", "onstop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("majun_log", "onDestroy");
     }
 }

@@ -61,6 +61,7 @@ import com.weishu.upf.service_management.app.UPFApplication;
         //     public int stopService(IApplicationThread caller, Intent service,
         // String resolvedType, int userId) throws RemoteException
         if ("stopService".equals(method.getName())) {
+            //与上面的获取Intent的获取方法其实是一个道理
             Intent raw = foundFirstIntentOfArgs(args).second;
             if (!TextUtils.equals(UPFApplication.getContext().getPackageName(), raw.getComponent().getPackageName())) {
                 // 插件的intent才做hook

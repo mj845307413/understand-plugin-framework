@@ -20,12 +20,6 @@ public class AMSHookHelper {
      * 主要完成的操作是  "把真正要启动的Activity临时替换为在AndroidManifest.xml中声明的替身Activity"
      * <p/>
      * 进而骗过AMS
-     *
-     * @throws ClassNotFoundException
-     * @throws NoSuchMethodException
-     * @throws InvocationTargetException
-     * @throws IllegalAccessException
-     * @throws NoSuchFieldException
      */
     public static void hookActivityManagerNative() throws ClassNotFoundException,
             NoSuchMethodException, InvocationTargetException,
@@ -74,7 +68,7 @@ public class AMSHookHelper {
         // 创建一个这个对象的代理对象, 然后替换这个字段, 让我们的代理对象帮忙干活
         Class<?> iActivityManagerInterface = Class.forName("android.app.IActivityManager");
         Object proxy = Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-                new Class<?>[] { iActivityManagerInterface }, new IActivityManagerHandler(rawIActivityManager));
+                new Class<?>[]{iActivityManagerInterface}, new IActivityManagerHandler(rawIActivityManager));
         mInstanceField.set(gDefault, proxy);
 
     }
@@ -119,6 +113,7 @@ public class AMSHookHelper {
         Field mCallBackField = Handler.class.getDeclaredField("mCallback");
         mCallBackField.setAccessible(true);
 
+        //将mH对象里面的mCallback换成我们自己创建的callBack；
         mCallBackField.set(mH, new ActivityThreadHandlerCallback(mH));
 
     }

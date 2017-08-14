@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.3'
     }
 }
 apply plugin: 'com.android.application'
@@ -14,7 +14,7 @@ repositories {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.weishu.upf.dynamic_proxy_hook.app2"
@@ -32,6 +32,16 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                //这里修改apk文件名
+                def fileName = "dynamic_proxy_hook.apk"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
         }
     }
 }

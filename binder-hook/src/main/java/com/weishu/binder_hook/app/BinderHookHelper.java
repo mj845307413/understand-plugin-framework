@@ -13,6 +13,7 @@ import java.util.Map;
  */
 public class BinderHookHelper {
 
+    //Hook并不等于动态代理，而只是可能需要动态代理来实现
     public static void hookClipboardService() throws Exception {
 
         final String CLIPBOARD_SERVICE = "clipboard";

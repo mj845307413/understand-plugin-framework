@@ -1,22 +1,26 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.weishu.upf.service_management.app">
-
+<manifest package="com.weishu.upf.service_management.app"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <!--重点来了，因为设置了 android:process 属性将组件运行到另一个进程，相当于另一个应用程序，所以在另一个线程中也将新建一个 Application 的实例。因此，每新建一个进程
+     Application 的 onCreate 都将被调用一次。 如果在 Application 的 onCreate 中有许多初始化工作并且需要根据进程来区分的，那就需要特别注意了。-->
     <application
-            android:allowBackup="true"
-            android:name="com.weishu.upf.service_management.app.UPFApplication"
-            android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+        android:name="com.weishu.upf.service_management.app.UPFApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        >
 
         <activity android:name="com.weishu.upf.service_management.app.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <service
-                android:name="com.weishu.upf.service_management.app.ProxyService"
-                android:process="plugin01"/>
+            android:name="com.weishu.upf.service_management.app.ProxyService"
+            android:process=":plugin01"
+            />
 
     </application>
 

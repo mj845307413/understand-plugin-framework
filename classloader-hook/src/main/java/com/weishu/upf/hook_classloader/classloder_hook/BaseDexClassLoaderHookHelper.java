@@ -21,6 +21,8 @@ import dalvik.system.DexFile;
  * 类名太长, 不要吐槽.
  * @author weishu
  * @date 16/3/28
+ *
+ * 插件和宿主程序的类全部都通过宿主的ClasLoader加载，虽然代码简单，但是鲁棒性很差；一旦插件之间甚至插件与宿主之间使用的类库有冲突，那么直接GG
  */
 public final class BaseDexClassLoaderHookHelper {
 

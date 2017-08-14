@@ -33,14 +33,17 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "插件插件!收到请回答!!", Toast.LENGTH_SHORT).show();
-                sendBroadcast(new Intent("com.weishu.upf.demo.app2.Receiver1"));
+                sendBroadcast(new Intent("com.example.mytest.MyBroadcast"));
             }
         });
 
         Utils.extractAssets(this, "test.jar");
         File testPlugin = getFileStreamPath("test.jar");
+        Utils.extractAssets(this, "mytest.apk");
+        File myTestPlugin = getFileStreamPath("mytest.apk");
         try {
             ReceiverHelper.preLoadReceiver(this, testPlugin);
+            ReceiverHelper.preLoadMyReceiver(this, myTestPlugin);
             Log.i(getClass().getSimpleName(), "hook success");
         } catch (Exception e) {
             throw new RuntimeException("receiver load failed", e);

@@ -62,7 +62,7 @@ public final class ServiceManager {
                 // service还不存在, 先创建
                 proxyCreateService(serviceInfo);
             }
-
+            //启动插件的的Service
             Service service = mServiceMap.get(serviceInfo.name);
             service.onStart(targetIntent, startId);
         } catch (Exception e) {
@@ -86,6 +86,7 @@ public final class ServiceManager {
             Log.w(TAG, "can not runnning, are you stopped it multi-times?");
             return 0;
         }
+        //这里service其实就是个对象，直接destroy掉就好了。
         service.onDestroy();
         mServiceMap.remove(serviceInfo.name);
         if (mServiceMap.isEmpty()) {
@@ -113,6 +114,8 @@ public final class ServiceManager {
 
     /**
      * 通过ActivityThread的handleCreateService方法创建出Service对象
+     * 由于handleCreateService需要CreateServiceData参数，所以我们首先创造出CreateServiceData对象
+     *
      * @param serviceInfo 插件的ServiceInfo
      * @throws Exception
      */

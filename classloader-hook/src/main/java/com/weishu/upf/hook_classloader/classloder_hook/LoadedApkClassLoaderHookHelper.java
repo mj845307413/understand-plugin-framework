@@ -15,6 +15,9 @@ import com.weishu.upf.hook_classloader.Utils;
 /**
  * @author weishu
  * @date 16/3/29
+ * 每一个Classloader都与每个apk里面相应的类配套
+ * 多ClassLoader构架，每一个插件都有一个自己的ClassLoader，因此类的隔离性非常好——如果不同的插件使用了同一个库的不同版本，它们相安无事！
+ * 多ClassLoader还有一个优点：可以真正完成代码的热加载！如果插件需要升级，直接重新创建一个自定的ClassLoader加载新的插件，然后替换掉原来的版本即可（Java中，不同ClassLoader加载的同一个类被认为是不同的类）；单ClassLoader的话实现非常麻烦，有可能需要重启进程。
  */
 public class LoadedApkClassLoaderHookHelper {
 
@@ -24,6 +27,7 @@ public class LoadedApkClassLoaderHookHelper {
             NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException, InstantiationException {
 
         // 先获取到当前的ActivityThread对象
+        //每个进程只有一个ActivityThread（UI线程），我们这里不能用newInstance来创建，具体的方法拿到相应的对象
         Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
         Method currentActivityThreadMethod = activityThreadClass.getDeclaredMethod("currentActivityThread");
         currentActivityThreadMethod.setAccessible(true);
@@ -35,8 +39,10 @@ public class LoadedApkClassLoaderHookHelper {
         Map mPackages = (Map) mPackagesField.get(currentActivityThread);
 
         // android.content.res.CompatibilityInfo
+        //获取getPackageInfoNoCheck方法
         Class<?> compatibilityInfoClass = Class.forName("android.content.res.CompatibilityInfo");
-        Method getPackageInfoNoCheckMethod = activityThreadClass.getDeclaredMethod("getPackageInfoNoCheck", ApplicationInfo.class, compatibilityInfoClass);
+        Method getPackageInfoNoCheckMethod = activityThreadClass
+                .getDeclaredMethod("getPackageInfoNoCheck", ApplicationInfo.class, compatibilityInfoClass);
 
         Field defaultCompatibilityInfoField = compatibilityInfoClass.getDeclaredField("DEFAULT_COMPATIBILITY_INFO");
         defaultCompatibilityInfoField.setAccessible(true);
@@ -65,7 +71,8 @@ public class LoadedApkClassLoaderHookHelper {
      * android.content.pm.PackageParser#generateActivityInfo(android.content.pm.PackageParser.Activity, int, android.content.pm.PackageUserState, int)
      */
     public static ApplicationInfo generateApplicationInfo(File apkFile)
-            throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchFieldException {
+            throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException,
+            NoSuchFieldException {
 
         // 找出需要反射的核心类: android.content.pm.PackageParser
         Class<?> packageParserClass = Class.forName("android.content.pm.PackageParser");

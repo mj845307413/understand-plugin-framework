@@ -16,7 +16,7 @@ import android.content.res.AssetManager;
 public class Utils {
 
     /**
-     * 把Assets里面得文件复制到 /data/data/files 目录下
+     * 把Assets里面得文件复制到 /data/data/"包名"/files 目录下
      *
      * @param context
      * @param sourceName

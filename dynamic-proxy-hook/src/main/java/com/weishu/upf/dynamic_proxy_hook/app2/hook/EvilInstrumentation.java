@@ -50,5 +50,6 @@ public class EvilInstrumentation extends Instrumentation {
             throw new RuntimeException("do not support!!! pls adapt it");
         }
     }
+
 }
 

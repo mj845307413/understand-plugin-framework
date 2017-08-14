@@ -24,6 +24,7 @@ import android.os.Message;
         switch (msg.what) {
             // ActivityThread里面 "LAUNCH_ACTIVITY" 这个字段的值是100
             // 本来使用反射的方式获取最好, 这里为了简便直接使用硬编码
+            //launch_activity以后就能正常实现Activity中的周期的事件
             case 100:
                 handleLaunchActivity(msg);
                 break;

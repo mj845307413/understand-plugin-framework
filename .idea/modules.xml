@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/contentprovider-management/contentprovider-management.iml" filepath="$PROJECT_DIR$/contentprovider-management/contentprovider-management.iml" />
       <module fileurl="file://$PROJECT_DIR$/dynamic-proxy-hook/dynamic-proxy-hook.iml" filepath="$PROJECT_DIR$/dynamic-proxy-hook/dynamic-proxy-hook.iml" />
       <module fileurl="file://$PROJECT_DIR$/intercept-activity/intercept-activity.iml" filepath="$PROJECT_DIR$/intercept-activity/intercept-activity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mytest/mytest.iml" filepath="$PROJECT_DIR$/mytest/mytest.iml" />
       <module fileurl="file://$PROJECT_DIR$/receiver-management/receiver-management.iml" filepath="$PROJECT_DIR$/receiver-management/receiver-management.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-management/service-management.iml" filepath="$PROJECT_DIR$/service-management/service-management.iml" />
       <module fileurl="file://$PROJECT_DIR$/understand-plugin-framework.iml" filepath="$PROJECT_DIR$/understand-plugin-framework.iml" />

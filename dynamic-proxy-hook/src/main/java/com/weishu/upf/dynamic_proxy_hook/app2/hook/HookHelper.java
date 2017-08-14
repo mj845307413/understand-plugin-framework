@@ -1,9 +1,11 @@
 package com.weishu.upf.dynamic_proxy_hook.app2.hook;
 
 import android.app.Instrumentation;
+import android.os.IBinder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 /**
  * @author weishu
@@ -11,7 +13,7 @@ import java.lang.reflect.Method;
  */
 public class HookHelper {
 
-    public static void attachContext() throws Exception{
+    public static void attachContext() throws Exception {
         // 先获取到当前的ActivityThread对象
         Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
         Method currentActivityThreadMethod = activityThreadClass.getDeclaredMethod("currentActivityThread");
@@ -29,5 +31,11 @@ public class HookHelper {
 
         // 偷梁换柱
         mInstrumentationField.set(currentActivityThread, evilInstrumentation);
+        //使用这个代理方法的话，new class必须要是interface
+//        Instrumentation instrumentation = (Instrumentation) Proxy
+//                .newProxyInstance(activityThreadClass.getClassLoader(), new Class<?>[]{Instrumentation.class}, new
+//                        MyInvocationHandler(mInstrumentation));
+//        mInstrumentationField.set(currentActivityThread, instrumentation);
+
     }
 }

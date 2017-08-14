@@ -48,6 +48,8 @@ public class BinderProxyHookHandler implements InvocationHandler {
         }
     }
 
+
+    //用于修改相应的方法，代理掉相应类当中的方法，至于为什么这边要代理两次，可以再研究一下
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
